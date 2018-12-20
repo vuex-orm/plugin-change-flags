@@ -7,7 +7,7 @@ export default class Role extends Model {
 
     static fields() {
         return {
-            id: this.attr(null),
+            id: this.increment(),
             name: this.attr('')
         };
     }

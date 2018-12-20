@@ -81,6 +81,35 @@ export default {
         };
 
         /**
+         * Providing the allNew getter
+         */
+        RootGetters.allNew = function(state) {
+            return function(entity) {
+                if (entity) {
+                    return new Query(state, entity)
+                        .where(elt => elt[pluginOptions.isNewFlagName])
+                        .get();
+                } else {
+                    let result = [];
+                    const allEntities = Model.database().entities;
+                    allEntities.forEach(e => {
+                        let elts = new Query(state, e.name)
+                            .where(elt => elt[pluginOptions.isNewFlagName])
+                            .get();
+                        result = result.concat(elts);
+                    });
+                    return result;
+                }
+            };
+        };
+
+        Getters.allNew = function(state, _getters, _rootState, rootGetters) {
+            return function() {
+                return rootGetters[`${state.$connection}/allNew`](state.$name);
+            };
+        };
+
+        /**
          * Providing the createNew factory
          * When called on the Model instead of new, it will
          * set the 2 flags to true
@@ -118,7 +147,10 @@ export default {
         RootActions.createNew = function(context, payload) {
             const result = { data: {} };
 
-            context.commit('createNew', { ...payload, result });
+            context.commit('createNew', {
+                ...payload,
+                result
+            });
 
             return result.data;
         };

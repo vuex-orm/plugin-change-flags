@@ -109,4 +109,31 @@ describe('Vuex ORM $isDirty/$isNew plugin default installation', function() {
         expect(result.length).to.equal(1);
         expect(result[0].id).to.equal(1);
     });
+
+    it('should provide a way to fetch all new entities in one call', function() {
+        const store = createStore([{ model: User }, { model: Role }]);
+
+        let user = User.createNew();
+        let user2 = new User({ id: 2, roleId: 1 });
+        let role = Role.createNew();
+
+        let result = store.getters['entities/allNew']();
+        expect(result.length).to.equal(2);
+
+        expect(result[0].id).to.equal(1);
+        expect(result[1].id).to.equal(1);
+    });
+
+    it('should provide a way to fetch new entities of one type', function() {
+        const store = createStore([{ model: User }, { model: Role }]);
+
+        let user = User.createNew();
+        let user2 = new User({ id: 2, roleId: 1 });
+        let role = Role.createNew();
+
+        let result = store.getters['entities/users/allNew']();
+        expect(result.length).to.equal(1);
+
+        expect(result[0] instanceof User).to.equal(true);
+    });
 });
