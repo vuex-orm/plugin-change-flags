@@ -1,0 +1,57 @@
+{
+    "name": "isdirty-isnew-plugin",
+    "version": "0.0.1",
+    "description": "Vuex ORM plugin adding IsDirty / IsNew flags to model entities",
+    "author": "Thomas Villaren",
+    "main": "dist/index.js",
+    "devDependencies": {
+        "@babel/core": "^7.0.0-beta.53",
+        "@vuex-orm/core": "^0.31.1",
+        "babel": "^6.23.0",
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-plugin-istanbul": "^1.1.0",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-stage-2": "^6.24.1",
+        "babel-register": "^6.26.0",
+        "chai": "^4.1.2",
+        "cross-env": "^5.2.0",
+        "mocha": "^5.2.0",
+        "mocha-webpack": "2.0.0-beta.0",
+        "nyc": "^11.9.0",
+        "vue": "^2.5.16",
+        "vuex": "^3.0.1",
+        "webpack": "^4.16.0",
+        "webpack-cli": "^3.0.8"
+    },
+    "dependencies": {},
+    "scripts": {
+        "build": "webpack",
+        "test": "cross-env NODE_ENV=test mocha --require babel-register --require babel-polyfill \"test/unit/**/*.js\"",
+        "cover": "cross-env NODE_ENV=test nyc mocha --require babel-register --require babel-polyfill \"test/unit/**/*.js\"",
+        "transpile": "babel src -d .transpiled -s"
+    },
+    "nyc": {
+        "all": false,
+        "reporter": [
+            "lcov",
+            "text"
+        ],
+        "report-dir": "./test/coverage",
+        "exclude": [
+            "**/node_modules/**",
+            ".tmp",
+            "test"
+        ],
+        "extension": [
+            "js"
+        ],
+        "cache": true,
+        "sourceMap": false,
+        "instrument": false
+    },
+    "resolutions": {
+        "eslint-scope": "3.7.1"
+    }
+}
