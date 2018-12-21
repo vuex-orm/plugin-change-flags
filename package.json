@@ -1,5 +1,5 @@
 {
-    "name": "isdirty-isnew-plugin",
+    "name": "vuexorm-isdirty-plugin",
     "version": "0.0.1",
     "description": "Vuex ORM plugin adding IsDirty / IsNew flags to model entities",
     "author": "Thomas Villaren",
