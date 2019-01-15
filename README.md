@@ -1,4 +1,10 @@
-# Vuex ORM IsDirty / IsNew plugin
+<p align="center">
+  <img width="192" src="https://github.com/vuex-orm/vuex-orm/blob/master/logo-vuex-orm.png" alt="Vuex ORM">
+</p>
+
+<h1 align="center">Vuex ORM IsDirty / IsNew plugin</h1>
+
+<h3 align="center">This project is supported by <a href="https://www.generativeobjects.com/" target="_blank">Generative Objects</a></h3>
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
