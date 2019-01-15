@@ -18,7 +18,7 @@ Simply reference the github project in your `package.json`
 ```javascript
 dependencies: {
     ...
-    "vuexorm-isdirty-plugin": "git://github.com/tvillaren/vuexorm-isdirty-plugin"
+    "vuexorm-isdirty-plugin": "git://github.com/vuex-orm/vuexorm-isdirty-plugin"
     ...
 }
 ```
