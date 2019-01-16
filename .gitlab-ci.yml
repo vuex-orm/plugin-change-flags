@@ -1,8 +1,0 @@
-test:
-    stage: test
-    script:
-        - npm install
-        - npm run cover
-    cache:
-        paths:
-            - node_modules/
