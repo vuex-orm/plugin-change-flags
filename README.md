@@ -13,22 +13,12 @@ It adds two flags `$isDirty` and `$isNew` (as _boolean_ attributes) on any insta
 
 ## Installation
 
-Simply reference the github project in your `package.json`
-
-```javascript
-dependencies: {
-    ...
-    "vuexorm-isdirty-plugin": "git://github.com/vuex-orm/vuexorm-isdirty-plugin"
-    ...
-}
-```
-
-and run `npm install`.
+Simply run `npm install @vuex-orm/plugin-change-flags --save` in your favorite terminal.
 
 Then, you need to install the plugin as any VuexORM plugin. In your store initialization code, simply add:
 
 ```javascript
-import VuexORMisDirtyPlugin from 'vuexorm-isdirty-plugin';
+import VuexORMisDirtyPlugin from '@vuex-orm/plugin-change-flags';
 ```
 
 and then
