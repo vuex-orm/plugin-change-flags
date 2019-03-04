@@ -6,12 +6,6 @@ import Role from '../dev/common/models/Role';
 import {
     expect
 } from 'chai';
-import {
-    Query
-} from '@vuex-orm/core';
-import {
-    debug
-} from 'util';
 
 describe('Vuex ORM $isDirty/$isNew plugin default installation', function () {
     it('should have both flag set to false when creating new', function () {
@@ -158,7 +152,8 @@ describe('Vuex ORM $isDirty/$isNew plugin default installation', function () {
         User.insert({
             data: [user, user2]
         });
-        Role.insert({
+        // Using insertOrUpdate for test coverage
+        Role.insertOrUpdate({
             data: role
         });
 
