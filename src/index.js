@@ -5,7 +5,8 @@ const defaultOptions = {
 
 export default {
     install(components, installOptions) {
-        const pluginOptions = { ...defaultOptions,
+        const pluginOptions = {
+            ...defaultOptions,
             ...installOptions
         };
 
@@ -47,9 +48,51 @@ export default {
          * This is the only automatic way which sets this flag
          * to true once it's in the store.
          */
+        let _ignoreIsDirtyFlag = false;
+
         Query.on('beforeUpdate', function (model) {
-            model[pluginOptions.isDirtyFlagName] = true;
+            if (!_ignoreIsDirtyFlag)
+                model[pluginOptions.isDirtyFlagName] = true;
         });
+
+        /**
+         * Providing the resetFlags actions
+         */
+        RootActions.resetAllDirtyFlags = function ({
+            rootGetters
+        }) {
+            debugger
+            const allDirty = rootGetters['entities/allDirty']();
+            _ignoreIsDirtyFlag = true;
+            allDirty.forEach(e =>
+                e.$update({
+                    [pluginOptions.isDirtyFlagName]: false
+                })
+            );
+            _ignoreIsDirtyFlag = false;
+        };
+
+        // Overwriting to add preventDirtyFlag option
+        const _insertOrUpdate = RootMutations.insertOrUpdate;
+        RootMutations.insertOrUpdate = function (state, payload) {
+            if (payload.preventDirtyFlag === true) {
+                _ignoreIsDirtyFlag = true;
+                _insertOrUpdate.call(this, state, payload);
+                _ignoreIsDirtyFlag = false;
+            } else
+                _insertOrUpdate.call(this, state, payload);
+        };
+
+        // Overwriting to add preventDirtyFlag option
+        const _update = RootMutations.update;
+        RootMutations.update = function (state, payload) {
+            if (payload.preventDirtyFlag === true) {
+                _ignoreIsDirtyFlag = true;
+                _update.call(this, state, payload);
+                _ignoreIsDirtyFlag = false;
+            } else
+                _update.call(this, state, payload);
+        };
 
         /**
          * Providing the allDirty getter

@@ -6,6 +6,12 @@ import Role from '../dev/common/models/Role';
 import {
     expect
 } from 'chai';
+import {
+    Query
+} from '@vuex-orm/core';
+import {
+    debug
+} from 'util';
 
 describe('Vuex ORM $isDirty/$isNew plugin default installation', function () {
     it('should have both flag set to false when creating new', function () {
@@ -210,5 +216,115 @@ describe('Vuex ORM $isDirty/$isNew plugin default installation', function () {
         expect(result.length).to.equal(1);
 
         expect(result[0] instanceof User).to.equal(true);
+    });
+
+    it('should provide a way to reset all dirty flags to false', async function () {
+        const store = createStore([{
+            model: User
+        }, {
+            model: Role
+        }]);
+
+        let user = new User({
+            id: 1,
+            roleId: 1
+        });
+        let user2 = new User({
+            id: 2,
+            roleId: 1
+        });
+        let role = new Role({
+            id: 3
+        });
+
+        User.insert({
+            data: [user, user2]
+        });
+        Role.insert({
+            data: role
+        });
+
+        user.name = 'AA';
+        role.name = 'AA';
+
+        User.update({
+            data: user
+        });
+        Role.update({
+            data: role
+        });
+
+
+        let result = store.getters['entities/allDirty']();
+        expect(result.length).to.equal(2);
+        await store.dispatch('entities/resetAllDirtyFlags', {}, {
+            root: true
+        });
+
+        let result2 = store.getters['entities/allDirty']();
+        expect(result2.length).to.equal(0);
+    });
+
+
+    it('should provide a way to ignore dirty flag when updating data', async function () {
+        const store = createStore([{
+            model: User
+        }, {
+            model: Role
+        }]);
+
+        let user = new User({
+            id: 1,
+            roleId: 1
+        });
+
+        User.insert({
+            data: [user]
+        });
+
+        user.name = 'AA';
+
+        User.update({
+            data: user,
+            preventDirtyFlag: true
+        });
+
+        let result = store.getters['entities/allDirty']();
+        expect(result.length).to.equal(0);
+    });
+
+    it('should provide a way to ignore dirty flag when insertingOrUpdating data', async function () {
+        const store = createStore([{
+            model: User
+        }, {
+            model: Role
+        }]);
+
+        let user = new User({
+            id: 1,
+            roleId: 1
+        });
+        let user2 = new User({
+            id: 2,
+            roleId: 1
+        });
+
+        User.insert({
+            data: [user, user2]
+        });
+
+        user.name = 'AA';
+
+        User.insertOrUpdate({
+            data: [user, user2],
+            preventDirtyFlag: true
+        });
+
+        let result = store.getters['entities/allDirty']();
+        expect(result.length).to.equal(0);
+
+        let users = store.getters['entities/users/all']();
+        expect(users.length).to.equal(2);
+
     });
 });

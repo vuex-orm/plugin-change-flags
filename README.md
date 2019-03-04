@@ -40,6 +40,16 @@ This flag is _automatically_ set to `true` when:
 -   creating a new instance using the `createNew` method;
 -   updating the entity instance in the store, using the `update` action (`insert` and `create` mutation will not set this flag to `true`).
 
+**Preventing flag setting**
+If you want to prevent the flag to be set to `true` when updating, you can pass `preventDirtyFlag: true` to the `update` and `insertOrUpdate` calls:
+
+```js
+User.update({
+    data: myUserToUpdate,
+    preventDirtyFlag: true
+});
+```
+
 ### \$isNew
 
 This flag is _automatically_ set to `true` when calling the `createNew` method.
@@ -106,6 +116,14 @@ or specifically to a type:
 ```javascript
 // Returns an array User entities currently marked as new in the store
 let results = store.getters['entities/users/allNew']();
+```
+
+### `resetAllDirtyFlags` action
+
+This action will run through all the entities marked as dirty in your store and set the corresponding flag to `false`:
+
+```js
+store.dispatch['entities/resetAllDirtyFlags']({}, { root: true });
 ```
 
 ## Plugin Options
