@@ -131,17 +131,19 @@ store.dispatch['entities/resetAllDirtyFlags']({}, { root: true });
 By default, the flags are named `$isDirty` and `$isNew`.  
 You can override those default by setting the corresponding options at plugin initialization.
 
-| Option name     | Description                         | Default value |
-| --------------- | ----------------------------------- | :-----------: |
-| isNewFlagName   | Sets the name of the _isNew_ flag   |   `$isNew`    |
-| isDirtyFlagName | Sets the name of the _isDirty_ flag |  `$isDirty`   |
+| Option name           | Description                                                         | Default value |
+| --------------------- | ------------------------------------------------------------------- | :-----------: |
+| isNewFlagName         | Sets the name of the _isNew_ flag                                   |   `$isNew`    |
+| isDirtyFlagName       | Sets the name of the _isDirty_ flag                                 |  `$isDirty`   |
+| exposeFlagsExternally | Adds the _isNew_ and _isDirty_ flags to the JSON stringified output |    `true`     |
 
 In order to use those options, you can pass them as the second parameter of the `install` call:
 
 ```javascript
 VuexORM.use(VuexORMisDirtyPlugin, {
     isNewFlagName: 'IsNew',
-    isDirtyFlagName: 'IsDirty'
+    isDirtyFlagName: 'IsDirty',
+    exposeFlagsExternally: true
 });
 ```
 

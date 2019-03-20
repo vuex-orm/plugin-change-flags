@@ -1,6 +1,7 @@
 const defaultOptions = {
     isDirtyFlagName: '$isDirty',
-    isNewFlagName: '$isNew'
+    isNewFlagName: '$isNew',
+    exposeFlagsExternally: true
 };
 
 export default {
@@ -19,6 +20,23 @@ export default {
             RootActions,
             Actions
         } = components;
+
+        /**
+         * Flags are exposed by default when stringiying into JSON.
+         * This can be deactivated by setting the flag to false
+         */
+        if (pluginOptions.exposeFlagsExternally) {
+            const localFieldModel = {
+                [pluginOptions.isDirtyFlagName]: Model.attr(false),
+                [pluginOptions.isNewFlagName]: Model.attr(false)
+            };
+
+            const _saveGetFiedsMethod = Model.prototype.$fields;
+            Model.prototype.$fields = function () {
+                const existing = _saveGetFiedsMethod.call(this);
+                return Object.assign({}, existing, localFieldModel);
+            }
+        }
 
         /**
          * Overwriting the $fill method used when calling
@@ -61,7 +79,6 @@ export default {
         RootActions.resetAllDirtyFlags = function ({
             rootGetters
         }) {
-            debugger
             const allDirty = rootGetters['entities/allDirty']();
             _ignoreIsDirtyFlag = true;
             allDirty.forEach(e =>
