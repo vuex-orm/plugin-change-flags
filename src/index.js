@@ -173,9 +173,7 @@ export default {
             const entity = payload.entity;
             const result = payload.result;
 
-            const query = new Query(state, entity);
-
-            query.setResult(result).createNew();
+            result.data = (new Query(state, entity)).createNew();
         };
 
         Actions.createNew = function (context) {
@@ -211,10 +209,7 @@ export default {
             record[pluginOptions.isDirtyFlagName] = true;
 
             const result = this.insert(record, {});
-
-            this.result.data = result[this.entity][0];
-
-            return this.result.data;
+            return result[this.entity][0];
         };
     }
 };

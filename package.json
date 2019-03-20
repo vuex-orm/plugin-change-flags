@@ -1,12 +1,12 @@
 {
   "name": "@vuex-orm/plugin-change-flags",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Vuex ORM plugin adding IsDirty / IsNew flags to model entities",
   "author": "Thomas Villaren",
   "main": "dist/index.js",
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.53",
-    "@vuex-orm/core": "^0.31.1",
+    "@vuex-orm/core": "^0.31.6",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
