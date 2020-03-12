@@ -6,6 +6,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'index.js',
         library: 'isdirty-isnew-vuexorm-plugin',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
+        globalObject: `(typeof self !== 'undefined' ? self : this)`,
     }
 };
