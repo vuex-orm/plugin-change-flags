@@ -1,6 +1,6 @@
 {
   "name": "@vuex-orm/plugin-change-flags",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Vuex ORM plugin adding IsDirty / IsNew flags to model entities",
   "author": "Thomas Villaren",
   "main": "dist/index.js",
