@@ -117,14 +117,14 @@ export default {
         RootGetters.allDirty = function (state) {
             return function (entity) {
                 if (entity) {
-                    return new Query(state, entity)
+                    return new Query(Model.database().store, entity)
                         .where(elt => elt[pluginOptions.isDirtyFlagName])
                         .get();
                 } else {
                     let result = [];
                     const allEntities = Model.database().entities;
                     allEntities.forEach(e => {
-                        let elts = new Query(state, e.name)
+                        let elts = new Query(Model.database().store, e.name)
                             .where(elt => elt[pluginOptions.isDirtyFlagName])
                             .get();
                         result = result.concat(elts);
@@ -148,14 +148,14 @@ export default {
         RootGetters.allNew = function (state) {
             return function (entity) {
                 if (entity) {
-                    return new Query(state, entity)
+                    return new Query(Model.database().store, entity)
                         .where(elt => elt[pluginOptions.isNewFlagName])
                         .get();
                 } else {
                     let result = [];
                     const allEntities = Model.database().entities;
                     allEntities.forEach(e => {
-                        let elts = new Query(state, e.name)
+                        let elts = new Query(Model.database().store, e.name)
                             .where(elt => elt[pluginOptions.isNewFlagName])
                             .get();
                         result = result.concat(elts);
@@ -190,7 +190,7 @@ export default {
             const entity = payload.entity;
             const result = payload.result;
 
-            result.data = (new Query(state, entity)).createNew();
+            result.data = (new Query(Model.database().store(), entity)).createNew();
         };
 
         Actions.createNew = function (context) {
